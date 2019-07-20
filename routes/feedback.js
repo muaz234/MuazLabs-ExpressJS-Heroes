@@ -35,9 +35,16 @@ router.get('/:id', function(req, res, next) {
         where: {
             id: req.params.id
         }
-    }).then((data)=> {
-        console.log(data)
-        res.status(200).json(data)
+    }).then((data) => {
+        if(data == null){
+            res.status(400).json({message: 'No records returned with associated ID: '+ req.params.id})
+            
+        }
+        else{
+            console.log(data)
+            res.status(200).json(data)
+        }
+       
         next()
     }).catch((err)=> {
         console.log(err)
@@ -45,11 +52,18 @@ router.get('/:id', function(req, res, next) {
 })
 
 router.delete('/:id', function(req, res, next){
+    const id = req.params.id 
     Feedback.destroy({ where: {
-        id: req.params.id   
+        id: id   
     }
-    }).then((data) => {
-        res.status(200).json(data)
+    }).then(() => {
+        console.log(res)
+        if(req.query != {}){
+            res.status(200).json({message: 'Deleted successfully'})
+        } 
+        else {
+            res.status(404).json({message: 'No data found with associated ID ' + id})
+        }
     })
 })
 
