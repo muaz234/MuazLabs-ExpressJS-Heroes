@@ -8,13 +8,12 @@ router.get('/', function(req, res, next) {
         console.log(data)
         res.status(200).json({data});
         next();
-        if(err){
-            res.status(401).json({
-                message: 'Fail to retreive data from db'});
-            console.log(err);
-            throw err;
-        }
     })
+        .catch((err) => {
+            res.status(401).json({
+                message: 'Fail to retrieve data from db'});
+            console.log(err);
+        })
 });
 
 router.post('/', function(req, res, next){
