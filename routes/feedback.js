@@ -30,6 +30,29 @@ router.post('/', function(req, res, next){
     })
 })
 
+router.get('/:id', function(req, res, next) {
+    Feedback.findOne({
+        where: {
+            id: req.params.id
+        }
+    }).then((data)=> {
+        console.log(data)
+        res.status(200).json(data)
+        next()
+    }).catch((err)=> {
+        console.log(err)
+    })
+})
+
+router.delete('/:id', function(req, res, next){
+    Feedback.destroy({ where: {
+        id: req.params.id   
+    }
+    }).then((data) => {
+        res.status(200).json(data)
+    })
+})
+
 
 
 module.exports = router;
