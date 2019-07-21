@@ -44,8 +44,25 @@ router.post('/', save_img,function(req, res, next) {
     })
   });
 
-  router.get('/', function(req, res, next) {
-    res.render({ title: 'Express' });
+  router.get('/:id', function(req, res, next) {
+    const argument = req.params.id;
+    Heroes.findOne({
+      where: {
+        id: argument
+      }
+    }).then((data) => {
+      if(data == null) {
+        res.status(400).json({message: 'No data Returned for ID: ' +argument})
+        
+      } else{
+        res.status(201).json({message: 'Returned data for ID:' +argument, data: data})
+      }
+      next() 
+      
+    }).catch((err) => {
+      console.log(err)
+      res.status(500).json({message: 'An Error occured. Please check your console or contact the administrator'})
+    })
   });
 
   router.delete('/:id', function(req, res, next) {
