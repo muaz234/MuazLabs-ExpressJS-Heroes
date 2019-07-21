@@ -22,7 +22,7 @@ router.post('/', save_img,function(req, res, next) {
     Heroes.create({
       name: result.name,
       description: result.description,
-      img_path: req.file.path 
+      img_filename: req.file.filename 
     }). then((data)=> {
      
       res.status(200).json({message:'Heroes created successfully', data: data})
@@ -35,7 +35,14 @@ router.post('/', save_img,function(req, res, next) {
 
 
   router.get('/', function(req, res, next) {
-    res.render({ title: 'Express' });
+    Heroes.findAll().then((data)=> {
+      console.log(data)
+      res.status(200).json({message:'All data returned', data: data})
+      next()
+    }).catch(err => {
+      console.log(err)
+      res.status(500).json({message: 'Data not returned. Please contact your administrator.'})
+    })
   });
 
   router.get('/', function(req, res, next) {
@@ -46,10 +53,6 @@ router.post('/', save_img,function(req, res, next) {
     res.render({ title: 'Express' });
   });
 
-
-  router.put('/:id', function(req, res, next) {
-    res.render({ title: 'Express' });
-  });
 
 
 

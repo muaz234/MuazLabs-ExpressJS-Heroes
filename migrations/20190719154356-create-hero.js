@@ -14,8 +14,8 @@ module.exports = {
       description: {
         type: Sequelize.TEXT('long')
       },
-      img_path: {
-        type: Sequelize.BLOB
+      img_filename: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
