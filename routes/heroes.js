@@ -51,7 +51,7 @@ router.post('/', save_img,function(req, res, next) {
         id: argument
       }
     }).then((data) => {
-      if(data == null) {
+      if(data === null) {
         res.status(400).json({message: 'No data Returned for ID: ' +argument})
         
       } else{
@@ -61,12 +61,22 @@ router.post('/', save_img,function(req, res, next) {
       
     }).catch((err) => {
       console.log(err)
-      res.status(500).json({message: 'An Error occured. Please check your console or contact the administrator'})
+      res.status(500).json({message: 'An Error occurred. Please check your console or contact the administrator'})
     })
   });
 
   router.delete('/:id', function(req, res, next) {
-    res.render({ title: 'Express' });
+    const argument = req.params.id;
+    Heroes.destroy({
+      where: {
+        id: argument
+      }
+    }).then(() => {
+      res.status(200).json({message: 'Hero with ID '+argument+ 'deleted successfully'})
+    }).catch((err) => {
+      console.log(err)
+      res.status(500).json({message: 'Unable to delete hero'})
+    })
   });
 
 
