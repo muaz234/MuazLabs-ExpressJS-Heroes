@@ -24,12 +24,11 @@ router.post('/', save_img,function(req, res, next) {
       description: result.description,
       img_filename: req.file.filename 
     }). then((data)=> {
-     
-      res.status(200).json({message:'Heroes created successfully', data: data})
+      res.status(200).json({message: 'Heroes created successfully', data: data})
       next()
     }).catch(err => {
       console.log(err)
-      res.status(500).json({messge: 'Unable to create hero!'})
+      res.status(500).json({message: 'Unable to create hero!'})
     })
   });
 
@@ -37,7 +36,7 @@ router.post('/', save_img,function(req, res, next) {
   router.get('/', function(req, res, next) {
     Heroes.findAll().then((data)=> {
       console.log(data)
-      res.status(200).json({message:'All data returned', data: data})
+      res.status(200).json({message: 'All data returned', data: data})
       next()
     }).catch(err => {
       console.log(err)
